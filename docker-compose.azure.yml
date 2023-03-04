@@ -1,0 +1,46 @@
+services:
+  app:
+    image: webtrader.azurecr.io/app
+    container_name: web-trader-app
+    ports:
+      - 80:80
+    environment:
+      NODE_ENV: production
+    networks:
+      web-trader-network:
+        aliases:
+          - app
+
+  api:
+    image: webtrader.azurecr.io/api
+    container_name: web-trader-api
+    restart: always
+    ports:
+      - 5001:5001
+    networks:
+      web-trader-network:
+        aliases:
+          - api
+
+  redis:
+    image: "redis:alpine"
+    container_name: web-trader-redis
+    command: redis-server
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      web-trader-network:
+        aliases:
+          - redis
+
+volumes:
+  web-trader-mongodb-data:
+    driver: azure_file
+    driver_opts:
+      share_name: web-trader-file-share
+      storage_account_name: webtrader
+
+networks:
+  web-trader-network:

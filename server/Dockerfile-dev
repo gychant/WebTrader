@@ -1,0 +1,11 @@
+# syntax=docker/dockerfile:1
+FROM python:3.9-slim-buster
+WORKDIR /app
+COPY ./requirements.txt /app
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 5001
+ENV FLASK_APP=application.py
+ENV FLASK_ENV=development
+CMD ["python", "application.py", "--port", "5001"]

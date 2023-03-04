@@ -1,0 +1,47 @@
+services:
+  app:
+    container_name: web-trader-app-dev
+    build: 
+      context: ./client
+      dockerfile: Dockerfile-dev
+    ports:
+      - 3350:3350
+    volumes:
+       - ./client/src:/app/src
+    environment:
+      NODE_ENV: development
+    networks:
+      web-trader-network:
+        aliases:
+          - app
+
+  api:
+    container_name: web-trader-api-dev
+    restart: always
+    build: 
+      context: ./server
+      dockerfile: Dockerfile-dev
+    ports:
+      - 5001:5001
+    volumes:
+       - ./server:/app
+    networks:
+      web-trader-network:
+        aliases:
+          - api
+
+  redis:
+    image: "redis:alpine"
+    container_name: web-trader-redis
+    command: redis-server
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      web-trader-network:
+        aliases:
+          - redis
+
+networks:
+  web-trader-network:

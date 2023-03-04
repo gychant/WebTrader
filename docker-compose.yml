@@ -1,0 +1,41 @@
+services:
+  app:
+    container_name: web-trader-app
+    restart: always
+    build: ./client
+    ports:
+      - 80:80
+    environment:
+      NODE_ENV: production
+    networks:
+      web-trader-network:
+        aliases:
+          - app
+
+  api:
+    container_name: web-trader-api
+    restart: always
+    build: ./server
+    ports:
+      - 5001:5001
+    networks:
+      web-trader-network:
+        aliases:
+          - api
+
+  redis:
+    image: "redis:alpine"
+    container_name: web-trader-redis
+    restart: always
+    command: redis-server
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      web-trader-network:
+        aliases:
+          - redis
+
+networks:
+  web-trader-network:
