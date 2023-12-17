@@ -2,7 +2,7 @@
 This repository provides a personalized trading platform for Robinhood accounts. It aims to enable the trading of stocks and options in a single webpage and reduces the operating time of order submission and cancellation. It is containerized using docker thus easy to deploy to the cloud.
 
 ## About me
-[LinkedIn](https://www.linkedin.com/in/zhicheng-liang-63941a120/)
+[LinkedIn](https://www.linkedin.com/in/zhicheng-liang-ph-d-63941a120/)
 
 ## Motivation
 The well-known [Robin-Stocks API](https://github.com/jmfernandes/robin_stocks) supports single user session only and uses console-based login. It is tempting to build a browser web app that provides UI-based login experience and can be hosted in a server accepting multi-user login.
